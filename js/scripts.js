@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ],
     sugarbee: [
       'okay, the hype is real — visually at least.',
-      'very crisp. almost startling.',
+      'very crisp.',
       'juicy, but where\'s the sweetness?',
       'still waiting for the caramel notes.',
       'good apple. just not what i was told.'
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'okay this is different.',
       'thin skin — barely there.',
       'pure sweet. no acid at all.',
-      'firm, almost snack-like.',
+      'firm, almost like snack.',
       'i was wrong about this one.'
     ],
     lucky: [
