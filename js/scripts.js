@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'good. i think i just got an off one.'
     ],
     sugarbeeo: [
-      'okay this is different.',
+      'this one is different.',
       'thin skin — barely there.',
       'pure sweet. no acid at all.',
       'firm, almost like snack.',
