@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     cosmic: [
       'okay, that\'s dark red.',
       'oh — that\'s actually very crisp.',
-      'high acid. sharp.',
+      'crisp and juicy, but also very sweet.',
       'there\'s a lot going on.',
       'intense. i get it now.'
     ],
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ],
     hunnyz: [
       'smells nice.',
-      'okay, this is pretty normal.',
+      'okay, maybe it just normal.',
       'wait — it\'s getting sweeter.',
       'more fragrant than i expected.',
       'okay that last bite was actually really good.'
@@ -171,8 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
       'more interesting than it looked.'
     ],
     honeyc: [
-      'okay, i understand the hype now.',
-      'incredibly crisp — almost loud.',
+      'i understand the hype now.',
+      'actually really crisp',
       'juicy, very juicy.',
       'the sweetness is there, but quiet.',
       'good. i think i just got an off one.'
