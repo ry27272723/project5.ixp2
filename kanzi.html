@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanzi — Find My Apple</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Darumadrop+One&family=Playwrite+AU+NSW:ital,wght@0,100..400;1,100..400&display=swap" rel="stylesheet">
+  <link href="css/reset.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body class="apple-page" style="--apple-hue: #A03028; --apple-dark: #6B1A18;">
+  <nav class="top-nav">
+    <a href="index.html" class="back-btn" aria-label="Go back">&#8592;</a>
+    <button class="menu-btn js-menu-trigger">Menu</button>
+  </nav>
+  <h1 class="apple-name">Kanzi</h1>
+  <section class="apple-stage">
+    <div class="apple-wrapper" id="apple-wrapper" role="button" tabindex="0" aria-label="Tap to taste the apple">
+      <img id="apple-img" src="images/kanzi0.png" alt="Kanzi apple">
+    </div>
+    <p class="tap-hint" id="tap-hint">tap to taste ↑</p>
+    <p class="bite-comment" id="bite-comment"></p>
+  </section>
+  <section class="apple-info">
+    <p class="apple-origin">Belgium · Washington State, USA</p>
+    <p class="apple-description">
+      A natural cross between Gala and Braeburn, originally developed in Belgium. "Kanzi" means hidden treasure in Swahili. Juicy and firm, with a bold sweet-tart flavor — the second best-selling apple in Europe.
+    </p>
+    <p class="apple-description">
+      Didn't know much about this one going in. Easy to bite through, which was unexpected given how dense it looked.
+    </p>
+    <p class="personal-note">
+      <span class="note-author">Alicia：</span>More tart than I expected. Easy to bite — though I'm not sure if it's tender or just soft.
+    </p>
+  </section>
+  <section class="rating-card" id="rating-card" aria-hidden="true">
+    <div class="rating-placeholder">
+      <span class="rating-placeholder__text">eat to unlock</span>
+    </div>
+    <div class="rating-row"><span class="rating-label">Sweetness</span><span class="rating-dots" data-score="2" data-max="5"></span></div>
+    <div class="rating-row"><span class="rating-label">Acidity</span><span class="rating-dots" data-score="4" data-max="5"></span></div>
+    <div class="rating-row"><span class="rating-label">Skin thickness</span><span class="rating-dots" data-score="3" data-max="5"></span></div>
+    <div class="rating-row"><span class="rating-label">Texture-flesh-crisp</span><span class="rating-dots" data-score="2" data-max="5"></span></div>
+    <div class="rating-row"><span class="rating-label">Juiciness</span><span class="rating-dots" data-score="4" data-max="5"></span></div>
+    <div class="rating-row"><span class="rating-label">Flavor</span><span class="rating-dots" data-score="4" data-max="5"></span></div>
+    <div class="rating-row rating-row--alicia"><span class="rating-label">Alicia rate</span><span class="rating-dots" data-score="3" data-max="5"></span></div>
+  </section>
+  <footer class="apple-footer">
+    <p class="purchase-info">4/2 &nbsp;&middot;&nbsp; Bristol Farm</p>
+    <div class="sticker-wrap">
+      <img src="images/kanzi-sticker.png" alt="Kanzi apple sticker" class="sticker-img" onerror="this.parentElement.style.display='none'">
+    </div>
+  </footer>
+  <script src="js/scripts.js"></script>
+</body>
+</html>

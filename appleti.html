@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appleti — Find My Apple</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Darumadrop+One&family=Playwrite+AU+NSW:ital,wght@0,100..400;1,100..400&family=Shrikhand&display=swap" rel="stylesheet">
+  <link href="css/reset.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body class="quiz-page">
+
+  <nav class="top-nav">
+    <a href="index.html" class="back-btn" aria-label="Go back">&#8592;</a>
+    <button class="lang-toggle js-lang-toggle">中</button>
+    <button class="menu-btn js-menu-trigger">Menu</button>
+  </nav>
+
+  <main class="quiz-wrap">
+    <div class="quiz-screen" id="quiz-screen"></div>
+  </main>
+
+  <script src="js/scripts.js"></script>
+  <script>
+  (function () {
+
+    var lang = 'en';
+
+    var QUESTIONS = [
+      {
+        en: {
+          q: "Picking an apple, you check first:",
+          options: [
+            "How it looks. It should be beautiful.",
+            "How it smells. Fragrance matters.",
+            "How firm it is. Texture is everything.",
+            "You just bite in and find out."
+          ]
+        },
+        zh: {
+          q: "挑苹果的时候，你首先看：",
+          options: [
+            "外表。它必须好看。",
+            "香气。香不香很重要。",
+            "手感。脆不脆最关键。",
+            "直接咬一口，看看再说。"
+          ]
+        },
+        weights: [{EN:3,PL:2}, {OP:3,GA:2}, {CC:3,GS:2}, {HC:3,KA:2}]
+      },
+      {
+        en: {
+          q: "How long would you wait for something you really want?",
+          options: [
+            "I want it now.",
+            "A few days, sure.",
+            "Months, if it's worth it.",
+            "Years. That's what makes it mean something."
+          ]
+        },
+        zh: {
+          q: "你最多愿意为想要的东西等多久？",
+          options: [
+            "我现在就想要。",
+            "等几天，可以。",
+            "几个月，值得的话。",
+            "几年。那才叫有意义。"
+          ]
+        },
+        weights: [{HC:3,GA:2}, {KA:2,PL:2}, {CC:2,EN:3}, {CC:3}]
+      },
+      {
+        en: {
+          q: "When you're buying something new, you:",
+          options: [
+            "Grab the one you always get. No need to think.",
+            "Go straight for the most expensive one to try.",
+            "Hunt until you find something nobody else has heard of.",
+            "Compare everything carefully, then pick the best-looking one."
+          ]
+        },
+        zh: {
+          q: "买新东西的时候，你：",
+          options: [
+            "拿你一直买的那个，不用想。",
+            "直接买最贵的，试一试。",
+            "非要找到别人没听过的那种。",
+            "仔细比较，挑最好看的那个。"
+          ]
+        },
+        weights: [{KA:3,GA:2}, {HC:3,CC:2}, {OP:3,EN:2}, {PL:3,EN:2}]
+      },
+      {
+        en: {
+          q: "In a group, you're usually:",
+          options: [
+            "Not the loudest, but nothing works without you.",
+            "The first one people notice.",
+            "You know a lot of people, but few really know you.",
+            "Talking only to the people you actually click with."
+          ]
+        },
+        zh: {
+          q: "在一群人里，你通常：",
+          options: [
+            "不是最闹的，但没你不行。",
+            "第一个被注意到的那个人。",
+            "认识很多人，但真正了解你的很少。",
+            "只和真正合得来的人说话。"
+          ]
+        },
+        weights: [{GA:3,KA:2}, {HC:3,EN:2}, {OP:3,KA:2}, {GS:3,PL:2}]
+      },
+      {
+        en: {
+          q: "Someone says something you don't agree with:",
+          options: [
+            "You consider whether you might be wrong first.",
+            "You don't care. You keep doing your thing.",
+            "You notice, but you don't show it.",
+            "You say something."
+          ]
+        },
+        zh: {
+          q: "有人说了你不认同的话：",
+          options: [
+            "你先想想是不是自己错了。",
+            "无所谓，你继续做自己的事。",
+            "你注意到了，但没表现出来。",
+            "你直接说出来。"
+          ]
+        },
+        weights: [{KA:3,GA:2}, {GS:3,EN:2}, {PL:3,OP:2}, {CC:3,HC:2}]
+      },
+      {
+        en: {
+          q: "You get good news. Your first reaction:",
+          options: [
+            "You share it immediately with everyone.",
+            "You sit with it for a bit first.",
+            "You double-check it's real before saying anything.",
+            "You stay calm on the outside. You're happy on the inside."
+          ]
+        },
+        zh: {
+          q: "你得到了好消息，第一反应：",
+          options: [
+            "马上跟所有人说。",
+            "先自己消化一下。",
+            "先确认是真的，再说。",
+            "表面冷静，心里已经很高兴。"
+          ]
+        },
+        weights: [{HC:3,GA:2}, {EN:3,OP:2}, {GS:3,CC:2}, {PL:3,KA:2}]
+      }
+    ];
+
+    var RESULTS = {
+      KA: {
+        en: { name: 'Kanzi',       copy: "More interesting than you look. You come off approachable — then catch people off guard. In a good way." },
+        zh: { name: 'Kanzi',       copy: "比看上去有趣得多。容易接近，然后让人措手不及。是好的那种。" },
+        img: 'images/kanzi0.png', page: 'kanzi.html'
+      },
+      HC: {
+        en: { name: 'Honeycrisp',  copy: "A lot, all at once, and somehow it works. People pay extra for you and they'd do it again." },
+        zh: { name: '蜜脆',         copy: "什么都多，偏偏还挺好。大家愿意多花钱买你，而且会再买。" },
+        img: 'images/honeyc0.png', page: 'honeycrisp.html'
+      },
+      GS: {
+        en: { name: 'Granny Smith', copy: "Sharp and unapologetic. Not for everyone — which is exactly the point." },
+        zh: { name: '澳洲青苹果',   copy: "直接，不妥协。不是所有人都懂你——这正是重点。" },
+        img: 'images/granny0.png', page: 'granny-smith.html'
+      },
+      PL: {
+        en: { name: 'Pink Lady',   copy: "Sweet-tart and put-together. You have standards, and you hold them quietly." },
+        zh: { name: '粉红女士',     copy: "甜中带酸，体面不失格调。有标准，安静地坚守着。" },
+        img: 'images/pink0.png', page: 'pink-lady.html'
+      },
+      CC: {
+        en: { name: 'Cosmic Crisp', copy: "High sugar, high acid, intense in every direction. You waited years to show up. Worth it." },
+        zh: { name: '宇宙脆',       copy: "高糖、高酸，哪个方向都强烈。等了很久才出现，值得。" },
+        img: 'images/cosmic0.png', page: 'cosmic.html'
+      },
+      OP: {
+        en: { name: 'Opal',        copy: "Golden and underrated. The people who find you don't forget you." },
+        zh: { name: '欧泊',         copy: "金色，被低估了。找到你的人不会忘记你。" },
+        img: 'images/opal0.png', page: 'opal.html'
+      },
+      EN: {
+        en: { name: 'Envy',        copy: "The name says it all. Deep, sweet, and a little mysterious. People wonder about you." },
+        zh: { name: '嫉妒',         copy: "名字已经说明了一切。深邃、甜蜜、有点神秘。让人好奇。" },
+        img: 'images/envy0.png', page: 'envy.html'
+      },
+      GA: {
+        en: { name: 'Gala',        copy: "Mild doesn't mean forgettable. You're the reason everything else works." },
+        zh: { name: '嘎啦',         copy: "平淡不代表可以被忘记。你是让一切运转的原因。" },
+        img: 'images/gala0.png', page: 'gala.html'
+      }
+    };
+
+    var ORDER = ['KA','HC','GS','PL','CC','OP','EN','GA'];
+    var scores, current, history;
+    var screen     = document.getElementById('quiz-screen');
+    var langToggle = document.querySelector('.js-lang-toggle');
+
+    function resetScores() {
+      scores  = {KA:0, HC:0, GS:0, PL:0, CC:0, OP:0, EN:0, GA:0};
+      history = [];
+    }
+
+    function getResult() {
+      var max = -1, winner = 'KA';
+      ORDER.forEach(function (k) {
+        if (scores[k] > max) { max = scores[k]; winner = k; }
+      });
+      return winner;
+    }
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function transition(fn) {
+      screen.classList.add('fading');
+      setTimeout(function () { fn(); screen.classList.remove('fading'); }, 280);
+    }
+
+    function goBack() {
+      if (history.length === 0) return;
+      var last = history.pop();
+      Object.keys(last.w).forEach(function (k) { scores[k] -= last.w[k]; });
+      current = last.qIdx;
+      transition(function () { renderQuestion(current); });
+    }
+
+    function renderQuestion(idx) {
+      var q     = QUESTIONS[idx];
+      var qData = q[lang];
+      var backLabel = lang === 'en' ? '← back' : '← 返回';
+
+      var fillPct  = ((idx + 1) / QUESTIONS.length) * 100;
+      var bodyTop  = 3.78, bodyBot = 31, bodyH = bodyBot - bodyTop;
+      var fillH    = (fillPct / 100) * bodyH;
+      var fillY    = (bodyBot - fillH).toFixed(2);
+      var clipId   = 'aqc' + idx;
+
+      var html = '<div class="quiz-progress">'
+        + '<svg class="quiz-apple-progress" width="50" height="54" viewBox="-2 -2 33 35" fill="none" xmlns="http://www.w3.org/2000/svg">'
+        + '<defs><clipPath id="' + clipId + '"><rect x="-3" y="' + fillY + '" width="35" height="37"/></clipPath></defs>'
+        + '<path d="M29 17.4439C29 25.4348 21.2684 31 14.5 31C7.73154 31 0 25.4348 0 17.4439C0 9.45301 2.46125 3.78043 14.5 3.78043C26.5387 3.78043 29 9.45301 29 17.4439Z" fill="var(--accent)" clip-path="url(#' + clipId + ')"/>'
+        + '<path d="M29 17.4439C29 25.4348 21.2684 31 14.5 31C7.73154 31 0 25.4348 0 17.4439C0 9.45301 2.46125 3.78043 14.5 3.78043C26.5387 3.78043 29 9.45301 29 17.4439Z" fill="none" stroke="var(--accent)" stroke-width="1.5"/>'
+        + '<path d="M9.5553 5.16695C10.9736 6.65232 14.653 8.73184 18.0244 5.16695H9.5553Z" fill="var(--accent)" fill-opacity="0.35"/>'
+        + '<path d="M13.6726 0C12.9493 0.741749 13.3712 5.06593 13.6726 7.1353H14.4831C14.109 4.74881 14.3272 1.38406 14.4831 0H13.6726Z" fill="var(--accent)"/>'
+        + '</svg>'
+        + '<span class="quiz-progress__count">' + pad(idx + 1) + ' / ' + pad(QUESTIONS.length) + '</span>'
+        + '</div>'
+        + '<p class="quiz-q-text">' + qData.q + '</p>'
+        + '<div class="quiz-options">';
+
+      qData.options.forEach(function (opt, i) {
+        html += '<button class="quiz-option" data-i="' + i + '">' + opt + '</button>';
+      });
+      html += '</div>';
+
+      if (idx > 0) html += '<button class="quiz-back" id="quiz-back">' + backLabel + '</button>';
+      screen.innerHTML = html;
+
+      var backEl = document.getElementById('quiz-back');
+      if (backEl) backEl.addEventListener('click', goBack);
+
+      screen.querySelectorAll('.quiz-option').forEach(function (btn, i) {
+        btn.addEventListener('click', function () {
+          var w = q.weights[i];
+          history.push({ qIdx: idx, w: w });
+          Object.keys(w).forEach(function (k) { scores[k] += w[k]; });
+          btn.classList.add('selected');
+          screen.querySelectorAll('.quiz-option').forEach(function (b) { b.disabled = true; });
+          setTimeout(function () {
+            transition(function () {
+              current++;
+              if (current < QUESTIONS.length) { renderQuestion(current); } else { renderResult(); }
+            });
+          }, 320);
+        });
+      });
+    }
+
+    function renderResult() {
+      var key = getResult();
+      var r   = RESULTS[key];
+      var rd  = r[lang];
+
+      var meetLabel  = lang === 'en' ? 'Meet your apple →' : '认识你的苹果 →';
+      var homeLabel  = lang === 'en' ? 'Back to home'      : '回到主页';
+      var retryLabel = lang === 'en' ? 'try again'         : '再试一次';
+      var youAre     = lang === 'en' ? 'you are'           : '你是';
+
+      var imgHtml  = r.img  ? '<img class="quiz-result__img" src="' + r.img + '" alt="' + rd.name + ' apple">' : '';
+      var meetHtml = r.page ? '<a class="quiz-result__meet" href="' + r.page + '">' + meetLabel + '</a>' : '';
+
+      screen.innerHTML = '<div class="quiz-result">'
+        + imgHtml
+        + '<p class="quiz-result__label">' + youAre + '</p>'
+        + '<h2 class="quiz-result__name">' + rd.name + '</h2>'
+        + '<p class="quiz-result__copy">' + rd.copy + '</p>'
+        + '<div class="quiz-result__actions">'
+        + meetHtml
+        + '<a class="quiz-result__home" href="index.html">' + homeLabel + '</a>'
+        + '</div>'
+        + '<button class="quiz-result__retry">' + retryLabel + '</button>'
+        + '</div>';
+
+      screen.querySelector('.quiz-result__retry').addEventListener('click', function () {
+        transition(function () { resetScores(); current = 0; renderQuestion(0); });
+      });
+    }
+
+    if (langToggle) {
+      langToggle.addEventListener('click', function () {
+        lang = lang === 'en' ? 'zh' : 'en';
+        langToggle.textContent = lang === 'en' ? '中' : 'EN';
+        transition(function () {
+          if (current < QUESTIONS.length) { renderQuestion(current); } else { renderResult(); }
+        });
+      });
+    }
+
+    resetScores();
+    current = 0;
+    renderQuestion(0);
+
+  }());
+  </script>
+
+</body>
+</html>
