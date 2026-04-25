@@ -144,8 +144,8 @@ img {
 
 .bite-comment {
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: #e07070;
+  font-size: 0.9rem;
+  color: var(--text-muted);
   font-style: italic;
   text-align: center;
   min-height: 1.5em;
@@ -439,7 +439,7 @@ img {
   text-decoration: none;
   cursor: pointer;
   letter-spacing: 0.02em;
-  padding: 0;
+  padding: 0 0.5rem;
 }
 
 .hero {
@@ -468,7 +468,7 @@ img {
   width: 58%;
   flex-shrink: 0;
   margin-right: -2%;
-  margin-top: 6rem;
+  margin-top: 14rem;
   position: relative;
   bottom: 10%;
 }
@@ -614,6 +614,7 @@ img {
 
   .hero__basket {
     width: 62%;
+    margin-top: 6rem;
   }
 
   .home-intro {
@@ -954,6 +955,11 @@ img {
 
 
 /* --- Lucky Apple Page --- */
+
+.lucky-page .bite-comment {
+  font-size: 1.05rem;
+  color: #e07070;
+}
 
 .easter-label {
   font-family: var(--font-label);
